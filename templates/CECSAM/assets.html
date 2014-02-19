@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block active %}"#nav-assets"{% endblock %}
+{% block container %}
+    <div class="container theme-showcase" role="main">
+		
+ <h2 class="page-header">Assets <span class="label label-default">{{ assets|length }}</span></h2>
+ {% if assets %}
+	  <div class="table-responsive">
+		<table class="table table-condensed table-striped">
+		  <thead>
+			<tr>
+			  <th>Tag</th>
+			  <th>Description</th>
+			  <th>Building</th>
+			  <th>Location</th>
+			  <th>Found</th>
+			  <th>Official</th>
+			  <th>Image</th>
+			</tr>
+		  </thead>
+		  <tbody>
+		    {% for asset in assets %}
+			<tr>
+			  <td><a href="{% url 'CECSAM.views.asset' asset_tag=asset.tag %}">{{ asset.tag }}</a></td>
+			  <td>{{ asset.description }}</td>
+			  <td><a href="{% url 'CECSAM.views.building' building_short=asset.location.building %}">{{ asset.location.building }}</a></td>
+			  <td><a href="{% url 'CECSAM.views.location' location_id=asset.location.id %}">{% if asset.location.room %}{{ asset.location.room }}{% else %}_{% endif %}</a></td>
+			  <td>{% if asset.found %}Yes{% else %}No{% endif %}</td>
+			  <td>{% if asset.official %}Yes{% else %}No{% endif %}</td>
+			  <td>{% if asset.picture %}<a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
+			</tr>
+			{% endfor %}
+		  </tbody>
+		</table>
+ {% else %}
+    <p>No Assets are available.</p>
+ {% endif %}
+	</div>
+    </div> <!-- /container -->
+{% endblock %}

@@ -1,0 +1,7 @@
+*.pyc
+settings.py
+*.json
+*~
+media
+db.sqlite3
+.DS_Store

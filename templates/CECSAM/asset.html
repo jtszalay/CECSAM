@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% block active %}"#nav-assets"{% endblock %}
+{% block container %}
+<div class="container theme-showcase" role="main">
+	
+	<div class="row">	  
+	 <div class="col-lg-8">
+		<ol class="breadcrumb">
+			<li><a href="{% url 'CECSAM.views.building' building_short=asset.location.building.name  %}">{{ asset.location.building.name }}</a></li>
+			<li><a href="{% url 'CECSAM.views.location' location_id=asset.location.id  %}">{% if asset.location.room %}{{ asset.location.room }}{% else %}_{% endif %}</a></li>
+			<li class="active">{{ asset }}</li>
+		</ol>
+	</div> <!-- /col-lg-8 -->
+	</div> <!-- /row -->
+	
+	  <h2 class="page-header">Asset Info {% if user.is_authenticated %}<button type="button" class="btn btn-default" id="editBtn">Edit <span class="glyphicon glyphicon-pencil"></span></button>{% endif %}</h2> 
+	      <form role="form" action="#" method="post" id="assetForm" style="display:none;" enctype="multipart/form-data">{% csrf_token %}
+		<div class="form-group">
+			<select class="form-control" name="location">
+				{% for location in locations %}
+				<option value="{{ location.id }}" {% if location.id == asset.location.id %}selected="selected"{% endif %}>{{ location }}</option>
+				{% endfor %} 
+			</select>
+  		</div>  
+		<div class="checkbox">
+    			<label>
+      				<input type="checkbox" name="found" {% if asset.found %}checked{% endif %}> Found 
+    			</label>
+  		</div>
+		<div class="form-group">
+                        <label for="specifications">Specifications</label>
+                        <input type="text" class="form-control" placeholder="Specifications" id="specifications" name="specifications" value="{{ asset.specifications }}">
+                </div>
+		<div class="form-group">
+                        <label for="picture">Picture</label>
+                        <input type="file" id="picture" accept="image/*" capture="camera"  name="picture">
+                </div>
+		<div class="checkbox">
+                        <label>
+                                <input type="checkbox" name="rmpicture"> Remove Picture
+                        </label>
+                </div>
+              	<button class="btn btn-large btn-default" type="submit">Submit Changes</button>
+              </form>
+
+	  <dl class="dl-horizontal">
+		<dt>Tag</dt> <dd>{{ asset.tag }}</dd>
+		<dt></dt><dd><div id="bcTarget"></div></dd>
+		<dt>Description</dt> <dd>{{ asset.description }}</dd>
+		<dt>Location</dt> <dd>{{ asset.location }}</dd>
+		<dt>Serial ID</dt> <dd>{{ asset.serialId }}</dd>
+		<dt>Model</dt> <dd>{{ asset.model }}</dd>
+		<dt>Found</dt> <dd>{% if asset.found %}Yes{% else %}No{% endif %}</dd>
+		<dt>Official</dt> <dd>{% if asset.official %}Yes{% else %}No{% endif %}</dd>
+		<dt>Specifications</dt> <dd>{{ asset.specifications }}</dd>
+		<dt>Picture</dt> <dd>{% if asset.picture %}<a href="{{ asset.picture.url }}"><img src="{{ asset.picture.url }}" class="img-thumbnail img-responsive" height=300 width=400 alt="{{ asset.picture.name}}"></a>{% endif %}</dd>
+		<dt>Date of Last Change</dt> <dd>{{ asset.date }}</dd>
+	</dl>
+	
+    </div> <!-- /container -->
+{% endblock %}
+{% block extraJS %}
+    <script>
+	$('#editBtn').click(function(){
+		$('#assetForm').toggle();
+			return false;
+		});	
+   </script>
+   <script type="text/javascript" src="{% static "jquery-barcode.js" %}"></script>  
+   <script>
+	$("#bcTarget").barcode("{{ asset.tag }}", "code39");     
+   </script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block active %}"#nav-search"{% endblock %}
+{% block container %}
+<div class="container theme-showcase" role="main">
+<form role="form" id="bulkScan">{% csrf_token %}
+	<div class="form-group">
+		<label for="assetTag">Asset Tag</label>
+		<input type="text" class="form-control" id="assetTag" name="assetTag" placeholder="Enter Asset Tag" autofocus>
+	</div>
+	<button type="submit" class="btn btn-default">Search</button>
+</form>
+</div>
+<ul id="tags">
+</ul>
+{% endblock %}
+{% block extraJS $}
+$( "#bulkScan" ).submit(function( event ) {
+  event.preventDefault();
+  $("#tags").append("<li>"+$( "#assetTag" ).val()+"</li>");
+  $( "#assetTag" ).val("");
+});
+{$ endblock $}

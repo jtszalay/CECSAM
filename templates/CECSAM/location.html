@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block active %}"#nav-locations"{% endblock %}
+{% block container %}
+    <div class="container theme-showcase" role="main">
+		
+<div class="row">
+         <div class="col-lg-8">
+                <ol class="breadcrumb">
+                        <li><a href="{% url 'CECSAM.views.building' building_short=location.building.name  %}">{{ location.building.name }}</a></li>
+                        <li class="active">{% if location.room %}{{ location.room }}{% else %}_{% endif %}</a></li>
+                </ol>
+        </div> <!-- /col-lg-8 -->
+        </div> <!-- /row -->
+
+ <h2 class="page-header">{{ location }} <span class="label label-default">{{ assets|length }}</span></h2>
+ {% if assets %}
+	  <div class="table-responsive">
+		<table class="table table-condensed table-striped">
+		  <thead>
+			<tr>
+			  <th>Tag</th>
+			  <th>Description</th>
+			  <th>Found</th>
+			  <th>Official</th>
+			  <th>Image</th>
+			</tr>
+		  </thead>
+		  <tbody>
+		    {% for asset in assets %}
+			<tr>
+			  <td><a href="{% url 'CECSAM.views.asset' asset_tag=asset.tag %}">{{ asset.tag }}</a></td>
+			  <td>{{ asset.description }}</td>
+			  <td>{% if asset.found %}Yes{% else %}No{% endif %}</td>
+                          <td>{% if asset.official %}Yes{% else %}No{% endif %}</td>
+			  <td>{% if asset.picture %}<a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
+			</tr>
+			{% endfor %}
+		  </tbody>
+		</table>
+ {% else %}
+    <p>No Assets are available.</p>
+ {% endif %}
+	</div>
+    </div> <!-- /container -->
+{% endblock %}

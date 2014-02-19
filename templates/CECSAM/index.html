@@ -1,0 +1,23 @@
+Hello world!
+{% if locations %}
+    <ul>
+    {% for location in locations %}
+        <li>{{ location.building }} {{ location.room }} - {{ location.building.longName }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Locations are available.</p>
+{% endif %}
+
+</br>
+
+{% if assets %}
+    <ul>
+    {% for asset in assets %}
+        <li>{{ asset.tag }} {{ asset.description }} - {{ asset.location }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Assets are available.</p>
+{% endif %}
+

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block active %}"#nav-buildings"{% endblock %}
+{% block container %}
+<div class="container theme-showcase" role="main">
+ 
+ <h2 class="page-header">Buildings <span class="label label-default">{{ buildings|length }}</span></h2>
+ {% if buildings %}
+	<div class="list-group col-lg-8">
+		{% for building in buildings %}
+		<a href="{% url 'CECSAM.views.building' building_short=building.name %}" class="list-group-item"><span class="badge">{{ building.location_set.all.count }}</span> {{ building.name }} - {{ building.longName }}</a>
+		{% endfor %}
+	</div><!-- /list-group -->
+{% else %}
+    <p>No Buildings are available.</p>
+{% endif %}
+
+</div> <!-- /container -->
+
+{% endblock %}
