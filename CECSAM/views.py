@@ -90,7 +90,7 @@ def asset(request, asset_tag):
         		return redirect('/accounts/login/?next=%s' % request.path)
 		else:
 			return render(request, 'CECSAM/addAsset.html', context)
-	c['asset'] = asset
+	context['asset'] = asset
 	if request.method == 'POST': # If the form has been submitted...
 		asset.location = Location.objects.get(id=request.POST['location'])
 		asset.found = request.POST.get('found', False)
