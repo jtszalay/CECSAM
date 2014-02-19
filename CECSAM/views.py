@@ -1,19 +1,14 @@
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render, get_object_or_404, HttpResponseRedirect
 
 from CECSAM.models import Location, Asset, Building
 from CECSAM.forms import SearchForm
-# Create your views here.
+
 def index(request):
-	#locations = Location.objects.all()
-	#assets = Asset.objects.all()
-	#context = {'locations':locations, 'assets':assets}
-    	#return render(request, 'CECSAM/index.html', context)
 	return HttpResponseRedirect(reverse('CECSAM.views.search'))
 
 def test(request):
@@ -34,8 +29,8 @@ def login_view(request):
 		else:
 			pass# Return an 'invalid login' error message.
 	else:
-		next = request.GET.get('next', '')
-		return render(request, 'CECSAM/login.html', {'next': next})#return login page
+		context= {'next': request.GET.get('next', '')}
+		return render(request, 'CECSAM/login.html', context)#return login page
 		
 def logout_view(request):
 	logout(request)
@@ -49,7 +44,8 @@ def buildings(request):
 def building(request, building_short):
         building = get_object_or_404(Building, name=building_short)
 	locations = Location.objects.filter(building__pk=building.pk)
-        return render(request, 'CECSAM/building.html', {'building':building, 'locations':locations, 'next':request.path})
+	context = {'building':building, 'locations':locations, 'next':request.path}
+        return render(request, 'CECSAM/building.html', context)
 
 def locations(request):
         locations = Location.objects.all()
@@ -59,7 +55,8 @@ def locations(request):
 def location(request, location_id):
         location = get_object_or_404(Location, pk=location_id)
 	assets = Asset.objects.filter(location__pk=location_id)
-        return render(request, 'CECSAM/location.html', {'location':location, 'assets':assets, 'next':request.path})
+	context = {'location':location, 'assets':assets, 'next':request.path}
+        return render(request, 'CECSAM/location.html', context)
 
 def assets(request):
 	if request.method == "POST":
@@ -81,18 +78,18 @@ def assets(request):
       		return render(request, 'CECSAM/assets.html', context)
 
 def asset(request, asset_tag):
-	c = {'next':request.path}
-        c.update(csrf(request))
+	context = {'next':request.path}
+        context.update(csrf(request))
         locations = Location.objects.all()
-	c['locations'] = locations
+	context['locations'] = locations
 	try:
 		asset = Asset.objects.get(tag=asset_tag)
 	except:
-		c['tag'] = asset_tag
+		context['tag'] = asset_tag
 		if not request.user.is_authenticated():
         		return redirect('/accounts/login/?next=%s' % request.path)
 		else:
-			return render(request, 'CECSAM/addAsset.html', c)
+			return render(request, 'CECSAM/addAsset.html', context)
 	c['asset'] = asset
 	if request.method == 'POST': # If the form has been submitted...
 		asset.location = Location.objects.get(id=request.POST['location'])
@@ -103,14 +100,14 @@ def asset(request, asset_tag):
 		if request.POST.get('rmpicture', False):
 			asset.picture = ""
 		asset.save()
-                return render(request, 'CECSAM/asset.html', c)
+                return render(request, 'CECSAM/asset.html', context)
 	else:
-		return render(request, 'CECSAM/asset.html', c)
+		return render(request, 'CECSAM/asset.html', context)
 
 def search(request):
-	c = {'next':request.path}
-    	c.update(csrf(request))
+	context = {'next':request.path}
+    	context.update(csrf(request))
 	if request.method == 'POST': # If the form has been submitted...
             	return HttpResponseRedirect('/assets/'+request.POST['assetTag']) # Redirect after POST
     	else:
-		return render(request, 'CECSAM/search.html', c)
+		return render(request, 'CECSAM/search.html', context)
