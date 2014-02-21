@@ -7,7 +7,7 @@
          <div class="col-lg-8">
                 <ol class="breadcrumb">
                         <li><a href="{% url 'CECSAM.views.building' building_short=location.building.name  %}">{{ location.building.name }}</a></li>
-                        <li class="active">{% if location.room %}{{ location.room }}{% else %}_{% endif %}</a></li>
+                        <li class="active">{% if location.room %}{{ location.room }}{% else %}_{% endif %}</li>
                 </ol>
         </div> <!-- /col-lg-8 -->
         </div> <!-- /row -->

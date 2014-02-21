@@ -1,19 +1,55 @@
-{% extends 'base.html' %}
-{% block active %}"#nav-search"{% endblock %}
+{% extends "base.html" %}
+{% block active %}"#nav-locations"{% endblock %}
 {% block container %}
-<div class="container theme-showcase" role="main">
-		<label for="assetTag">Asset Tag</label>
-		<input type="text" class="form-control" id="assetTag" name="assetTag" placeholder="Enter Asset Tag" autofocus>
-</div>
-<ul id="tags">
-</ul>
-{% endblock %}
-{% block extraJS $}
-$( document ).ready(function() {$("#assetTag").keyup(function(event){
-    if(event.keyCode == 13){
-  	$("#tags").append("<li>"+$( "#assetTag" ).val()+"</li>");
-  	$( "#assetTag" ).val("");
-    }
-});}
+    <div class="container theme-showcase" role="main">
+		
+<div class="row">
+         <div class="col-lg-8">
+                <ol class="breadcrumb">
+                        <li><a href="{% url 'CECSAM.views.building' building_short=location.building.name  %}">{{ location.building.name }}</a></li>
+                        <li><a href="{% url 'CECSAM.views.location' location_id=location.id  %}">{% if location.room %}{{ location.room }}{% else %}_{% endif %}</a></li>
+			<li class="active">Bulk Scan</li> 
+                </ol>
+        </div> <!-- /col-lg-8 -->
+        </div> <!-- /row -->
 
-{$ endblock $}
+ <h2 class="page-header">{{ location }} <span class="label label-default">{{ assets|length }}</span></h2>
+	<div class="panel panel-default">
+  		<div class="panel-heading">
+		    <h3 class="panel-title">Found</h3>
+		</div>
+		<div class="panel-body">
+			<ul id="found-list" class="list-group connectedSortable droptrue">
+		        </ul><!-- /list-group -->
+  		</div>
+	</div>
+	 <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Not Found</h3>
+                </div>
+                <div class="panel-body">
+			<ul id="not-found-list" class="list-group connectedSortable droptrue">
+		                {% for asset in assets %}
+				<li class="list-group-item" id="{{ asset.tag }}">{{ asset.tag }} - {{ asset.description }}</li>
+		                {% endfor %}
+		        </ul><!-- /list-group -->
+		 </div>
+        </div>
+	 <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">New</h3>
+                </div>
+                <div class="panel-body">
+			<ul id="new-list" class="list-group connectedSortable droptrue">
+		        </ul><!-- /list-group -->
+		</div>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}
+{% block extraJS %}
+<script>
+	$( ".connectedSortable" ).sortable({
+      connectWith: ".connectedSortable"
+    }).disableSelection();
+</script>
+{% endblock %}

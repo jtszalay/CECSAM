@@ -27,7 +27,7 @@
 			  <td><a href="{% url 'CECSAM.views.location' location_id=asset.location.id %}">{% if asset.location.room %}{{ asset.location.room }}{% else %}_{% endif %}</a></td>
 			  <td>{% if asset.found %}Yes{% else %}No{% endif %}</td>
 			  <td>{% if asset.official %}Yes{% else %}No{% endif %}</td>
-			  <td>{% if asset.picture %}<a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
+			  <td>{% if asset.picture %}<div style="color: transparent;font-size: 0;">A</div><a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
 			</tr>
 			{% endfor %}
 		  </tbody>
