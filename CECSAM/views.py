@@ -62,7 +62,7 @@ def location(request, location_id, api=False):
         location = get_object_or_404(Location, pk=location_id)
 	assets = Asset.objects.filter(location__pk=location_id)
 	if api:
-                return HttpResponse(simplejson.dumps({'location':Location.objects.filter(pk=location_id).values()[0], 'assets':list(assets.values())}), mimetype='application/json')
+                return HttpResponse(simplejson.dumps({'location':Location.objects.filter(pk=location_id).values()[0], 'assets':list(assets.values('tag', 'description', 'found', 'official'))}), mimetype='application/json')
         else:
 		context = {'location':location, 'assets':assets, 'next':request.path}
 	        return render(request, 'CECSAM/location.html', context)

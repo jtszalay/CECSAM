@@ -38,7 +38,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li id="nav-search"><a href="/search">Search</a></li>
+            <li id="nav-search"><a href="/search"><span class="glyphicon glyphicon-search"></span> Search</a></li>
             <li id="nav-assets"><a href="/assets">Assets</a></li>
             <li id="nav-buildings"><a href="/buildings">Buildings</a></li>
 	    <li id="nav-locations"><a href="/locations">Locations</a></li>
@@ -48,6 +48,7 @@
 	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
                     class="glyphicon glyphicon-user"></span> {{ user.username }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
+			<li><a href="/admin/"><span class="glyphicon glyphicon-lock"></span> Admin</a></li>
                         <li><a href="/accounts/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
                     </ul>
                 </li>

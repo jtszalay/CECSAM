@@ -7,7 +7,7 @@
          <div class="col-lg-8">
                 <ol class="breadcrumb">
                         <li><a href="{% url 'CECSAM.views.building' building_short=location.building.name  %}">{{ location.building.name }}</a></li>
-                        <li class="active">{% if location.room %}{{ location.room }}{% else %}_{% endif %}</li>
+                        <li class="active">{{ location.room|default:"_" }}</li>
                 </ol>
         </div> <!-- /col-lg-8 -->
         </div> <!-- /row -->
@@ -29,9 +29,9 @@
 		    {% for asset in assets %}
 			<tr>
 			  <td><a href="{% url 'CECSAM.views.asset' asset_tag=asset.tag %}">{{ asset.tag }}</a></td>
-			  <td>{{ asset.description }}</td>
-			  <td>{% if asset.found %}Yes{% else %}No{% endif %}</td>
-                          <td>{% if asset.official %}Yes{% else %}No{% endif %}</td>
+			  <td>{{ asset.description|upper }}</td>
+			  <td>{{ asset.found|yesno:"Yes,No" }}</td>
+                          <td>{{ asset.official|yesno:"Yes,No" }}</td>
 			  <td>{% if asset.picture %}<a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
 			</tr>
 			{% endfor %}
