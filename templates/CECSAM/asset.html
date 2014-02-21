@@ -51,8 +51,8 @@
 		<dt>Location</dt> <dd>{{ asset.location }}</dd>
 		<dt>Serial ID</dt> <dd>{{ asset.serialId }}</dd>
 		<dt>Model</dt> <dd>{{ asset.model }}</dd>
-		<dt>Found</dt> <dd>{{ asset.found|yesno:"Yes,No" }}</dd>
-		<dt>Official</dt> <dd>{{ asset.official|yesno:"Yes,No" }}</dd>
+		<dt>Found</dt> <dd>{% if asset.found %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</dd>
+		<dt>Official</dt> <dd>{% if asset.official %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</dd>
 		<dt>Specifications</dt> <dd>{{ asset.specifications }}</dd>
 		<dt>Picture</dt> <dd>{% if asset.picture %}<a href="{{ asset.picture.url }}"><img src="{{ asset.picture.url }}" class="img-thumbnail img-responsive" height=300 width=400 alt="{{ asset.picture.name}}"></a>{% endif %}</dd>
 		<dt>Date of Last Change</dt> <dd>{{ asset.date }}</dd>

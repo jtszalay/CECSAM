@@ -30,8 +30,8 @@
 			<tr>
 			  <td><a href="{% url 'CECSAM.views.asset' asset_tag=asset.tag %}">{{ asset.tag }}</a></td>
 			  <td>{{ asset.description|upper }}</td>
-			  <td>{{ asset.found|yesno:"Yes,No" }}</td>
-                          <td>{{ asset.official|yesno:"Yes,No" }}</td>
+			  <td>{% if asset.found %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
+                          <td>{% if asset.official %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
 			  <td>{% if asset.picture %}<a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
 			</tr>
 			{% endfor %}

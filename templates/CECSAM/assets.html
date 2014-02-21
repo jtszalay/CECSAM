@@ -25,8 +25,8 @@
 			  <td>{{ asset.description|upper }}</td>
 			  <td><a href="{% url 'CECSAM.views.building' building_short=asset.location.building %}">{{ asset.location.building }}</a></td>
 			  <td><a href="{% url 'CECSAM.views.location' location_id=asset.location.id %}">{{ asset.location.room|default:"_" }}</a></td>
-			  <td>{{ asset.found|yesno:"Yes,No" }}</td>
-			  <td>{{ asset.official|yesno:"Yes,No" }}</td>
+			  <td>{% if asset.found %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
+			  <td>{% if asset.official %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
 			  <td>{% if asset.picture %}<div style="color: transparent;font-size: 0;">A</div><a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
 			</tr>
 			{% endfor %}
