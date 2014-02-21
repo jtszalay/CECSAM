@@ -14,7 +14,7 @@
 	</div> <!-- /col-lg-8 -->
 	</div> <!-- /row -->
 	
-	  <h2 class="page-header">Asset Info {% if user.is_authenticated %}<button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>{% endif %}</h2> 
+	  <h2 class="page-header"><span class="glyphicon glyphicon-hdd"></span> Asset Info {% if user.is_authenticated %}<button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>{% endif %}</h2> 
 	      <form role="form" action="#" method="post" id="assetForm" style="display:none;" enctype="multipart/form-data">{% csrf_token %}
 		<div class="form-group">
 			<select class="form-control" name="location">

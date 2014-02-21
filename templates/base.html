@@ -39,9 +39,9 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li id="nav-search"><a href="/search"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-            <li id="nav-assets"><a href="/assets">Assets</a></li>
-            <li id="nav-buildings"><a href="/buildings">Buildings</a></li>
-	    <li id="nav-locations"><a href="/locations">Locations</a></li>
+            <li id="nav-assets"><a href="/assets"><span class="glyphicon glyphicon-hdd"></span> Assets</a></li>
+            <li id="nav-buildings"><a href="/buildings"><span class="glyphicon glyphicon-home"></span> Buildings</a></li>
+	    <li id="nav-locations"><a href="/locations"><span class="glyphicon glyphicon-map-marker"></span> Locations</a></li>
           </ul>
 	  {% if user.is_authenticated %}
 	  <ul class="nav navbar-nav navbar-right">
@@ -49,7 +49,7 @@
                     class="glyphicon glyphicon-user"></span> {{ user.username }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
 			<li><a href="/admin/"><span class="glyphicon glyphicon-lock"></span> Admin</a></li>
-                        <li><a href="/accounts/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+                        <li><a href="/accounts/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -62,7 +62,7 @@
               <input type="password" placeholder="Password" class="form-control" name="password">
             </div>
 	    <input type="hidden" name="next" value="{{ next }}" />
-            <button type="submit" class="btn btn-default">Sign in</button>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Sign in</button>
           </form>
 	  {% endif %}
         </div><!--/.navbar-collapse -->
