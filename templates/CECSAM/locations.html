@@ -6,8 +6,11 @@
 <h2 class="page-header"><span class="glyphicon glyphicon-map-marker"></span> Locations <span class="label label-default">{{ locations|length }}</span></h2>
 {% if locations %}
 	<div class="list-group col-lg-8">
-		{% for location in locations %}
-		<a href="{% url 'CECSAM.views.location' location_id=location.id %}" class="list-group-item"><span class="badge">{{ location.asset_set.all.count }}</span> {{ location.building.name }} {{ location.room }} - {{ location.building.longName }}</a>
+		{% regroup locations|dictsort:"building.name" by building.name as locations_list %}
+		{% for location in locations_list %}
+	                {% for l in location.list|dictsort:"room" %}
+			<a href="{% url 'CECSAM.views.location' location_id=l.id %}" class="list-group-item"><span class="badge">{{ l.asset_set.all.count }}</span> {{ l.building.name }} {{ l.room }} - {{ l.building.longName }}</a>
+			{% endfor %}
 		{% endfor %}
 	</div><!-- /list-group -->
 {% else %}

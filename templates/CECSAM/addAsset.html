@@ -23,10 +23,13 @@
 		</div>
 		<div class="form-group">
 			<label for="location">Location</label>
+			{% regroup locations|dictsort:"building.name" by building.name as locations_list %}
 			<select class="form-control" name="location" id="location">
-				{% for location in locations %}
-				<option value="{{ location.id }}">{{ location }}</option>
-				{% endfor %} 
+			{% for location in locations_list %}
+				{% for l in location.list|dictsort:"room" %}
+					<option value="{{ l.id }}">{{ l }}</option>
+				{% endfor %}
+			{% endfor %}
 			</select>
   		</div>  
 		<div class="checkbox">
