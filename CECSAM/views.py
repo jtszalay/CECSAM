@@ -33,6 +33,14 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('CECSAM.views.index'))# Redirect to a success page.
 
+def search(request):
+    context = {'next':request.path}
+    context.update(csrf(request))
+    if request.method == 'POST': # If the form has been submitted...
+        return HttpResponseRedirect('/assets/'+request.POST['assetTag']) # Redirect after POST
+    else:
+        return render(request, 'CECSAM/search.html', context)
+
 def buildings(request):
     buildings = Building.objects.all()
     context = {'buildings':buildings, 'next':request.path}
@@ -108,11 +116,3 @@ def asset(request, asset_tag):
         asset=assets[0]
         context['asset'] = asset
         return render(request, 'CECSAM/asset.html', context)
-
-def search(request):
-    context = {'next':request.path}
-    context.update(csrf(request))
-    if request.method == 'POST': # If the form has been submitted...
-        return HttpResponseRedirect('/assets/'+request.POST['assetTag']) # Redirect after POST
-    else:
-        return render(request, 'CECSAM/search.html', context)
