@@ -9,12 +9,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'CECSAM.views.index', name='index'),
-    url(r'^api/buildings/$', 'CECSAM.views.buildings', {'api':True}),
-    url(r'^api/buildings/(?P<building_short>[A-Z]+)/$', 'CECSAM.views.building', {'api':True}),
-    url(r'^api/locations/$', 'CECSAM.views.locations', {'api':True}),
-    url(r'^api/locations/(?P<location_id>\d+)/$', 'CECSAM.views.location', {'api':True}),
-    url(r'^api/assets/$', 'CECSAM.views.assets', {'api':True}),
-    url(r'^api/assets/(?P<asset_tag>[AC]\d+)/$', 'CECSAM.views.asset', {'api':True}),
     url(r'^buildings/$', 'CECSAM.views.buildings', name='buidlings'),
     url(r'^buildings/(?P<building_short>[A-Z]+)/$', 'CECSAM.views.building', name='building'),
     url(r'^locations/$', 'CECSAM.views.locations', name='locations'),

@@ -33,39 +33,27 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('CECSAM.views.index'))# Redirect to a success page.
 
-def buildings(request, api=False):
+def buildings(request):
     buildings = Building.objects.all()
-    if api:
-        return HttpResponse(simplejson.dumps({'buildings':list(buildings.values())}), mimetype='application/json')
-    else:
-        context = {'buildings':buildings, 'next':request.path}
-        return render(request, 'CECSAM/buildings.html', context)
+    context = {'buildings':buildings, 'next':request.path}
+    return render(request, 'CECSAM/buildings.html', context)
 
-def building(request, building_short, api=False):
+def building(request, building_short):
     building = get_object_or_404(Building, name=building_short)
     locations = Location.objects.filter(building__pk=building.pk)
-    if api:
-        return HttpResponse(simplejson.dumps({'building':Building.objects.filter(name=building_short).values()[0], 'locations':list(locations.values())}), mimetype='application/json')
-    else:
-        context = {'building':building, 'locations':locations, 'next':request.path}
-        return render(request, 'CECSAM/building.html', context)
+    context = {'building':building, 'locations':locations, 'next':request.path}
+    return render(request, 'CECSAM/building.html', context)
 
-def locations(request, api=False):
+def locations(request):
     locations = Location.objects.all()
-    if api:
-        return HttpResponse(simplejson.dumps({'buildings':list(locations.values())}), mimetype='application/json')
-    else:
-        context = {'locations':locations, 'next':request.path}
-        return render(request, 'CECSAM/locations.html', context)
+    context = {'locations':locations, 'next':request.path}
+    return render(request, 'CECSAM/locations.html', context)
 
-def location(request, location_id, api=False):
+def location(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
     assets = Asset.objects.filter(location__pk=location_id)
-    if api:
-        return HttpResponse(simplejson.dumps({'location':Location.objects.filter(pk=location_id).values()[0], 'assets':list(assets.values('tag', 'description', 'found', 'official'))}), mimetype='application/json')
-    else:
-        context = {'location':location, 'assets':assets, 'next':request.path}
-        return render(request, 'CECSAM/location.html', context)
+    context = {'location':location, 'assets':assets, 'next':request.path}
+    return render(request, 'CECSAM/location.html', context)
 
 def bulkScan(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
@@ -73,7 +61,7 @@ def bulkScan(request, location_id):
     context = {'location':location, 'assets':assets, 'next':request.path}
     return render(request, 'CECSAM/bulkScan.html', context)
 
-def assets(request, api=False):
+def assets(request):
     if request.method == "POST":
         asset = Asset()
         asset.tag = request.POST['tag']
@@ -89,19 +77,16 @@ def assets(request, api=False):
         return HttpResponseRedirect(reverse('CECSAM.views.asset', args=(asset.tag,))) 
     else:
         assets = Asset.objects.all()
-        if api:
-            return HttpResponse(simplejson.dumps({'assets':list(assets.values('tag', 'description','found', 'official'))}), mimetype='application/json')
-        else:
-            context = {'assets':assets, 'next':request.path}
-            return render(request, 'CECSAM/assets.html', context)
+        context = {'assets':assets, 'next':request.path}
+        return render(request, 'CECSAM/assets.html', context)
 
-def asset(request, asset_tag, api=False):
+def asset(request, asset_tag):
     context = {'next':request.path}
     context.update(csrf(request))
     locations = Location.objects.all()
     context['locations'] = locations
     assets = Asset.objects.filter(tag=asset_tag)
-    if len(assets) == 0 and not api:
+    if len(assets) == 0:
         context['tag'] = asset_tag
         if not request.user.is_authenticated():
             return redirect('/accounts/login/?next=%s' % request.path)
@@ -119,11 +104,6 @@ def asset(request, asset_tag, api=False):
             asset.picture = ""
         asset.save()
         return render(request, 'CECSAM/asset.html', context)
-    elif api:
-        if len(assets) == 0:
-            raise Http404
-        else:
-            return HttpResponse(simplejson.dumps({'assets':assets.values('tag', 'description','found', 'official')[0]}), mimetype='application/json')
     else:
         asset=assets[0]
         context['asset'] = asset
