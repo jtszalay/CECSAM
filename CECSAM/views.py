@@ -43,22 +43,30 @@ def search(request):
 
 def buildings(request):
     buildings = Building.objects.all()
+    for b in buildings:
+        b.allFound = b.all_found()
     context = {'buildings':buildings, 'next':request.path}
     return render(request, 'CECSAM/buildings.html', context)
 
 def building(request, building_short):
     building = get_object_or_404(Building, name=building_short)
+    building.allFound = building.all_found()
     locations = Location.objects.filter(building__pk=building.pk)
+    for l in locations:
+        l.allFound = l.all_found()
     context = {'building':building, 'locations':locations, 'next':request.path}
     return render(request, 'CECSAM/building.html', context)
 
 def locations(request):
     locations = Location.objects.all()
+    for l in locations:
+        l.allFound = l.all_found()
     context = {'locations':locations, 'next':request.path}
     return render(request, 'CECSAM/locations.html', context)
 
 def location(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
+    location.allFound = location.all_found()
     assets = Asset.objects.filter(location__pk=location_id)
     context = {'location':location, 'assets':assets, 'next':request.path}
     return render(request, 'CECSAM/location.html', context)

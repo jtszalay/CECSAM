@@ -9,7 +9,7 @@
 		{% regroup locations|dictsort:"building.name" by building.name as locations_list %}
 		{% for location in locations_list %}
 	                {% for l in location.list|dictsort:"room" %}
-			<a href="{% url 'CECSAM.views.location' location_id=l.id %}" class="list-group-item"><span class="badge">{{ l.asset_set.all.count }}</span> {{ l.building.name }} {{ l.room }} - {{ l.building.longName }}</a>
+			<a href="{% url 'CECSAM.views.location' location_id=l.id %}" class="list-group-item"><span class="badge">{{ l.asset_set.all.count }}</span> {% if l.allFound %}<span class="glyphicon glyphicon-star"></span>{% else %}<span class="glyphicon glyphicon-star-empty"></span>{% endif %} {{ l.building.name }} {{ l.room }} - {{ l.building.longName }}</a>
 			{% endfor %}
 		{% endfor %}
 	</div><!-- /list-group -->

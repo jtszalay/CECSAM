@@ -42,4 +42,4 @@ class Building(models.Model):
         return self.name
 
     def all_found(self):
-        return all([l.found for l in Location.objects.filter(building__pk=self.pk)])
+        return all([l.all_found() for l in Location.objects.filter(building__pk=self.pk)])

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load CECSAM_extras %}
 {% block active %}"#nav-locations"{% endblock %}
 {% block container %}
     <div class="container theme-showcase" role="main">
@@ -13,7 +12,7 @@
         </div> <!-- /col-lg-8 -->
         </div> <!-- /row -->
 
- <h2 class="page-header"><span class="glyphicon glyphicon-map-marker"></span> {{ location }} <span class="label label-default">{{ assets|length }}</span></h2>
+ <h2 class="page-header"><span class="glyphicon glyphicon-map-marker"></span> {{ location }} <span class="label label-default">{{ assets|length }}</span> {% if location.allFound %}<span class="glyphicon glyphicon-star"></span>{% else %}<span class="glyphicon glyphicon-star-empty"></span>{% endif %}</h2>
  {% if assets %}
 	  <div class="table-responsive">
 		<table class="table table-condensed table-striped">
