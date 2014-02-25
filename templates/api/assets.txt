@@ -1,0 +1,3 @@
+"Tag","Description","Building","Room","Serial Id","Model","Found","Official","Last Update"
+{% for row in data %}"{{ row.tag }}","{{ row.description }}","{{ row.location.building.name  }}","{{ row.location.room }}","{{ row.serialId }}","{{ row.model }}","{{ row.found }}","{{ row.official}}","{{ row.date }}"
+{% endfor %}

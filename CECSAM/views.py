@@ -22,9 +22,11 @@ def login_view(request):
                 login(request, user)
                 return HttpResponseRedirect(request.POST['next'])# Redirect to a success page.
             else:
-                pass# Return a 'disabled account' error message
+                context= {'next': request.GET.get('next', ''), error:'The account has been disabled.'}
+                return render(request, 'CECSAM/login.html', context)
         else:
-            pass# Return an 'invalid login' error message.
+            context= {'next': request.GET.get('next', ''), 'error':"Incorrect Username or Password!"}
+            return render(request, 'CECSAM/login.html', context)
     else:
         context= {'next': request.GET.get('next', '')}
         return render(request, 'CECSAM/login.html', context)#return login page
@@ -97,6 +99,7 @@ def assets(request):
         return render(request, 'CECSAM/assets.html', context)
 
 def asset(request, asset_tag):
+    asset_tag = asset_tag.capitalize()
     context = {'next':request.path}
     context.update(csrf(request))
     locations = Location.objects.all()

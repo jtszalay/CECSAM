@@ -12,7 +12,7 @@
         </div> <!-- /col-lg-8 -->
         </div> <!-- /row -->
 
- <h2 class="page-header"><span class="glyphicon glyphicon-map-marker"></span> {{ location }} <span class="label label-default">{{ assets|length }}</span> {% if location.allFound %}<span class="glyphicon glyphicon-star"></span>{% else %}<span class="glyphicon glyphicon-star-empty"></span>{% endif %}</h2>
+ <h2 class="page-header"><span class="glyphicon glyphicon-map-marker"></span> {{ location }} <span class="label label-default">{{ assets|length }} {% if location.allFound %}<span class="glyphicon glyphicon-star"></span>{% else %}<span class="glyphicon glyphicon-star-empty"></span>{% endif %}</span><a class="pull-right" style="color:inherit" href="/api/csv/locations/{{ location.id }}" title="Download as CSV" alt="Download as CSV"><span class="glyphicon glyphicon-download"></span></a></h2>
  {% if assets %}
 	  <div class="table-responsive">
 		<table class="table table-condensed table-striped">

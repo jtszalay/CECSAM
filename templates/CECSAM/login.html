@@ -9,7 +9,11 @@
 			  	<div class="panel-heading">
 			    	<h3 class="panel-title">Please sign in</h3>
 			 	</div>
-			  	<div class="panel-body">
+			  	<div class="panel-body">{% if error %}
+				<div class="alert alert-danger alert-dismissable">
+				  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				  <strong>Error!</strong> {{ error }}
+				</div>{% endif %}
 			    	<form accept-charset="UTF-8" role="form" action="/accounts/login/" method="POST">{% csrf_token %}
                     <fieldset>
 			    	  	<div class="form-group">

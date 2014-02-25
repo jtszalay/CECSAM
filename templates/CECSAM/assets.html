@@ -3,7 +3,7 @@
 {% block container %}
     <div class="container theme-showcase" role="main">
 		
- <h2 class="page-header"><span class="glyphicon glyphicon-hdd"></span> Assets <span class="label label-default">{{ assets|length }}</span></h2>
+ <h2 class="page-header"><span class="glyphicon glyphicon-hdd"></span> Assets <span class="label label-default">{{ assets|length }}</span><a class="pull-right" style="color:inherit" href="/api/csv/assets/" title="Download as CSV" alt="Download as CSV"><span class="glyphicon glyphicon-download"></span></a></h2>
  {% if assets %}
 	  <div class="table-responsive">
 		<table class="table table-condensed table-striped">
