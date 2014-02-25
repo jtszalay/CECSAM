@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime 
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
@@ -14,7 +15,7 @@ def location_csv(request, location_id):
     location.allFound = location.all_found()
     assets = Asset.objects.filter(location__pk=location_id)
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="'+location.__unicode__()+'-assets.csv"'
+    response['Content-Disposition'] = 'attachment; filename="'+location.__unicode__()+'-assets-'+datetime.now().__str__()+'.csv"'
     t = loader.get_template('api/assets.txt')
     c = Context({
         'data': assets,
@@ -25,7 +26,7 @@ def location_csv(request, location_id):
 def assets_csv(request):
     assets = Asset.objects.all()
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="assets.csv"'
+    response['Content-Disposition'] = 'attachment; filename="assets-'+datetime.now().__str__()+'.csv"'
     t = loader.get_template('api/assets.txt')
     c = Context({
         'data': assets,
