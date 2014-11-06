@@ -13,7 +13,7 @@ from CECSAM.models import Location, Asset, Building
 def location_csv(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
     location.allFound = location.all_found()
-    assets = Asset.objects.filter(location__pk=location_id)
+    assets = Asset.objects.filter(location__pk=location_id).order_by('location', 'tag')
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="'+location.__unicode__()+'-assets-'+datetime.now().__str__()+'.csv"'
     t = loader.get_template('api/assets.txt')
@@ -24,7 +24,7 @@ def location_csv(request, location_id):
     return response
 
 def assets_csv(request):
-    assets = Asset.objects.all()
+    assets = Asset.objects.all().order_by('location', 'tag')
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="assets-'+datetime.now().__str__()+'.csv"'
     t = loader.get_template('api/assets.txt')

@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'abe8@*sl5bd!*mjevnf_7l94dq02p(iw!fsj2s#!%hpbb9fk5$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False 
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['assets.cecsresearch.org']
 
 
 # Application definition
@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'CECSAM.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': '/home/ubuntu/CECSAM/db.sqlite3',
     }
 }
 
@@ -92,14 +92,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'http://assets.cecsresearch.org/static/'
+STATIC_ROOT = '/var/www/CECSAM/static/'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'), # Change this to your own directory.
 )
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = '/var/www/CECSAM/media'
+MEDIA_URL = 'http://assets.cecsresearch.org/media/'
 
 
 REST_FRAMEWORK = {

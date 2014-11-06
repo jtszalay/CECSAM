@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Labels For CECS Assets</title>
+    <style>
+    body {
+        width: 8.5in;
+        margin: .5in 0in;
+        }
+    .label{
+        /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
+        width: 2.025in; /* plus .6 inches from padding */
+        height: .875in; /* plus .125 inches from padding */
+        padding: .125in .4041in 0;
+
+        float: left;
+
+        text-align: center;
+        overflow: hidden;
+
+        /*outline: 1px dotted; /* outline doesn't occupy space like border does */
+        }
+    .page-break  {
+        clear: left;
+        display:block;
+        page-break-after:always;
+        }
+    </style>
+
+</head>
+<body>
+{% for label in labels %}
+<div class="label"><span class="dept" style="font-size:50%">Computer Engineering and Computer Science Dept.</span><br><div style="padding: 0px 0px 0px .35in;"><div id="{{ label }}"></div></div></div>
+{% endfor %}
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{% static "jquery-barcode.js" %}"></script>
+<script>
+	{% for label in labels %}
+        $("#{{ label }}").barcode("{{ label }}", "code39");
+	{% endfor %}
+</script>
+</body>
+</html>

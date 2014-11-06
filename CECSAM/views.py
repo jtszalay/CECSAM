@@ -69,7 +69,7 @@ def locations(request):
 def location(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
     location.allFound = location.all_found()
-    assets = Asset.objects.filter(location__pk=location_id)
+    assets = Asset.objects.filter(location__pk=location_id).order_by('location', 'tag')
     context = {'location':location, 'assets':assets, 'next':request.path}
     return render(request, 'CECSAM/location.html', context)
 
@@ -91,10 +91,14 @@ def assets(request):
         asset.official = request.POST.get('official', False)
         asset.specifications = request.POST['specifications']
         asset.picture = request.FILES['picture']
+        asset.po_id = request.POST['po_id']
+        asset.purchase_date = request.POST['purchase_date'] if request.POST['purchase_date'] else "1970-01-01"
+        asset.chart_field = request.POST['chart_field']
+        asset.purchase_amount = request.POST['purchase_amount'] if request.POST['purchase_amount'] else "0.0"
         asset.save()
         return HttpResponseRedirect(reverse('CECSAM.views.asset', args=(asset.tag,))) 
     else:
-        assets = Asset.objects.all()
+        assets = Asset.objects.all().order_by('location', 'tag')
         context = {'assets':assets, 'next':request.path}
         return render(request, 'CECSAM/assets.html', context)
 
@@ -127,3 +131,9 @@ def asset(request, asset_tag):
         asset=assets[0]
         context['asset'] = asset
         return render(request, 'CECSAM/asset.html', context)
+
+def labels(request):
+    labels = ['C'+str(i) for i in range(10000,10030)]
+    context = {'labels':labels}
+    return render(request, 'CECSAM/labels.html', context)
+

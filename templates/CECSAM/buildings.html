@@ -7,7 +7,7 @@
  {% if buildings %}
 	<div class="list-group col-lg-8">
 		{% for building in buildings %}
-		<a href="{% url 'CECSAM.views.building' building_short=building.name %}" class="list-group-item"><span class="badge">{{ building.location_set.all.count }}</span>{% if building.allFound %}<span class="glyphicon glyphicon-star"></span>{% else %}<span class="glyphicon glyphicon-star-empty"></span>{% endif %} {{ building.name }} - {{ building.longName }}</a>
+		{% if building.location_set.all.count %}<a href="{% url 'CECSAM.views.building' building_short=building.name %}" class="list-group-item"><span class="badge">{{ building.asset_count }}</span>{% if building.allFound %}<span class="glyphicon glyphicon-star"></span>{% else %}<span class="glyphicon glyphicon-star-empty"></span>{% endif %} {{ building.name }} - {{ building.longName }} ({{ building.location_set.all.count }} Location{{ building.location_set.all.count|pluralize }})</a>{% endif %}
 		{% endfor %}
 	</div><!-- /list-group -->
 {% else %}

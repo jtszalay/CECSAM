@@ -32,7 +32,7 @@
 			  <td>{{ asset.description|upper }}</td>
 			  <td>{% if asset.found %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
                           <td>{% if asset.official %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
-			  <td>{% if asset.picture %}<a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
+			  <td>{% if asset.picture %}<div style="color: transparent;font-size: 0;">A</div><a href="{{ asset.picture.url }}"><span class="glyphicon glyphicon-picture"></span></a>{% endif %}</td>
 			</tr>
 			{% endfor %}
 		  </tbody>

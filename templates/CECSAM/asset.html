@@ -57,6 +57,10 @@
 		<dt>Official</dt> <dd>{% if asset.official %}<div style="color: transparent;font-size: 0;">Y</div><span class="glyphicon glyphicon-ok"></span>{% else %}<div style="color: transparent;font-size: 0;">N</div><span class="glyphicon glyphicon-remove"></span>{% endif %}</dd>
 		<dt>Specifications</dt> <dd>{{ asset.specifications }}</dd>
 		<dt>Picture</dt> <dd>{% if asset.picture %}<a href="{{ asset.picture.url }}"><img src="{{ asset.picture.url }}" class="img-thumbnail img-responsive" height=300 width=400 alt="{{ asset.picture.name}}"></a>{% endif %}</dd>
+		<dt>Purchase Amount</dt> <dd>{% if asset.purchase_amount %}${% endif %}{{ asset.purchase_amount }}</dd>
+		<dt>Purchase Order ID</dt> <dd>{{ asset.po_id }}</dd>
+		<dt>Purchase Date</dt> <dd>{{ asset.purchase_date }}</dd>
+		<dt>Chart Field</dt> <dd>{{ asset.chart_field }}</dd>
 		<dt>Date of Last Change</dt> <dd>{{ asset.date }}</dd>
 	</dl>
 	
